@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <title>Admin</title>
+
+    <script>
+        window["sap-ushell-config"] = {
+            defaultRenderer: "fiori2",
+            applications: {
+                "bank-customers": {
+                    title: "Bank Customers",
+                    description: "Manage Bank Customers",
+                    additionalInformation: "SAPUI5.Component=customer",
+                    applicationType: "URL",
+                    url: "./customers",
+                    navigationMode: "embedded"
+                },
+                "bank-deposits": {
+                    title: "Bank Deposits",
+                    description: "Manage Bank Deposits",
+                    additionalInformation: "SAPUI5.Component=deposit",
+                    applicationType: "URL",
+                    url: "./deposits",
+                    navigationMode: "embedded"
+                },
+            }
+        };
+    </script>
+    <script src="https://sapui5.hana.ondemand.com/test-resources/sap/ushell/bootstrap/sandbox.js"></script>
+    <script id="sap-ui-bootstrap"
+            src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+            data-sap-ui-async="true"
+            data-sap-ui-libs="sap.m, sap.ushell, sap.collaboration, sap.ui.layout"
+            data-sap-ui-theme="sap_fiori_3"
+            data-sap-ui-compatVersion="edge"
+            data-sap-ui-resourceroots='{"admin.bank": "./customers", "admin.deposits": "./deposits"}'>
+    </script>
+    <script>
+        sap.ui.getCore().attachInit(() => sap.ushell.Container.createRenderer().placeAt('content'))
+    </script>
+</head>
+
+<body class="sapUiBody" id="content">
+
+</body>
+
+</html>

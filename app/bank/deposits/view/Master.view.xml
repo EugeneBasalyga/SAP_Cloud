@@ -1,0 +1,92 @@
+<mvc:View
+        controllerName="admin.deposits.controller.Master"
+        xmlns:semantic="sap.f.semantic"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m">
+
+    <semantic:SemanticPage
+            id="page"
+            headerPinnable="true"
+            preserveHeaderStateOnScroll="false"
+            titleAreaShrinkRatio="1:1.6:1.6"
+            toggleHeaderOnTitleClick="true">
+
+        <semantic:content>
+            <Table
+                    id="idDepositsTable"
+                    inset="false"
+                    mode="SingleSelectLeft"
+                    items="{ path : 'bank>/Deposit' }"
+                    itemPress="onItemPress"
+                    growing="true" growingScrollToLoad="true"
+                    growingThreshold="100">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <content>
+                            <Title text="{i18n>appTitle}" level="H2"/>
+                            <ToolbarSpacer/>
+                            <Button text="{i18n>btnCloseBankingDay}" icon="sap-icon://wallet" press="onCloseBankingDay"> </Button>
+                            <Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onCreateDeposit"> </Button>
+                            <Button text="{i18n>btnClose}" icon="sap-icon://decline" press="onCloseDeposit"> </Button>
+                            <Button text="{i18n>btnWithdrawPercents}" icon="sap-icon://waiver" press="onWithdrawPercents"> </Button>
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>depositContractNumber}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>depositCustomerSurname}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>depositCustomerName}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>depositType}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>depositInitialSum}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>depositBalance}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>depositPercentage}"/>
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem type="Navigation"
+                                    vAlign="Middle">
+                        <cells>
+                            <Text text="{bank>contract_number}"/>
+                            <Text text="{bank>customer/name}"/>
+                            <Text text="{bank>customer/surname}"/>
+                            <Text text="{bank>type/name}"/>
+                            <Text text="{bank>initialSum} {bank>currency/name}"/>
+                            <Text text="{bank>curBalance} {bank>currency/name}"/>
+                            <Text text="{bank>percentage}%"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </semantic:content>
+
+    </semantic:SemanticPage>
+</mvc:View>

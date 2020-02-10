@@ -1,0 +1,84 @@
+<mvc:View
+        controllerName="admin.bank.controller.Master"
+        xmlns:semantic="sap.f.semantic"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m">
+
+    <semantic:SemanticPage
+            id="page"
+            headerPinnable="true"
+            preserveHeaderStateOnScroll="false"
+            titleAreaShrinkRatio="1:1.6:1.6"
+            toggleHeaderOnTitleClick="true">
+
+        <semantic:content>
+            <Table
+                    id="idCustomersTable"
+                    inset="false"
+                    mode="SingleSelectLeft"
+                    items="{ path : 'bank>/Customers', sorter : [ { path : 'surname'} ]}"
+                    itemPress="onItemPress"
+                    growing="true" growingScrollToLoad="true"
+                    growingThreshold="100">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <content>
+                            <Title text="{i18n>appTitle}" level="H2"/>
+                            <ToolbarSpacer/>
+                            <Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onCreateCustomer"> </Button>
+                            <Button text="{i18n>btnDelete}" icon="sap-icon://delete" press="onDeleteCustomer"> </Button>
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>identNumber}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>name}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>surname}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>birthDate}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>phoneNumber}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>workPlace}"/>
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem type="Navigation"
+                                    vAlign="Middle">
+                        <cells>
+                            <Text text="{bank>identNumber}"/>
+                            <Text text="{bank>name}"/>
+                            <Text text="{bank>surname}"/>
+                            <Text text="{bank>birthDate}"/>
+                            <Text text="{bank>phoneNumber}"/>
+                            <Text text="{bank>workPlace}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </semantic:content>
+
+    </semantic:SemanticPage>
+</mvc:View>

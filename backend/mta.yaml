@@ -1,0 +1,47 @@
+﻿ID: bas_lab_backend
+_schema-version: 3.1.0
+version: 1.0.0
+
+modules:
+    -
+        name: bas_lab_db
+        type: hdb
+        path: db
+        provides:
+            - {name: bas_lab_db, public: true}
+        parameters:
+            memory: 512M
+            disk-quota: 512M
+        requires:
+            - {name: bas_lab_hdi}
+    -
+        name: bas_lab_srv
+        type: nodejs
+        path: srv
+        properties:
+            XS_APP_LOG_LEVEL: debug
+        parameters:
+            memory: 256M
+            disk-quota: 1024M
+        provides:
+            - {name: bas_lab_srv, public: true, properties: {url: '${default-url}'}}
+        requires:
+            - {name: bas_lab_db}
+            - {name: bas_lab_hdi}
+            - {name: bas_lab_uaa}
+            - {name: bas_lab_dest}
+            - {name: bas_lab_conn}
+
+resources:
+    -
+        name: bas_lab_hdi
+        type: org.cloudfoundry.existing-service
+    -
+        name: bas_lab_uaa
+        type: org.cloudfoundry.existing-service
+    -
+        name: bas_lab_dest
+        type: org.cloudfoundry.existing-service
+    -
+        name: bas_lab_conn
+        type: org.cloudfoundry.existing-service

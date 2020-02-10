@@ -1,0 +1,34 @@
+{
+  "VCAP_SERVICES": {
+    "hanatrial": [
+      {
+        "label": "hanatrial",
+        "provider": null,
+        "plan": "hdi-shared",
+        "name": "bas_lab_hdi",
+        "tags": [
+          "hana",
+          "database",
+          "relational"
+        ],
+        "instance_name": "bas_lab_hdi",
+        "binding_name": null,
+        "credentials": {
+          "encrypt": true,
+          "sslValidateCertificate": false,
+          "host": "zeus.hana.prod.eu-central-1.whitney.dbaas.ondemand.com",
+          "port": "23803",
+          "driver": "com.sap.db.jdbc.Driver",
+          "url": "jdbc:sap://zeus.hana.prod.eu-central-1.whitney.dbaas.ondemand.com:23803?encrypt=true&validateCertificate=true&currentschema=BAS_LAB_PIRIS",
+          "schema": "BAS_LAB_PIRIS",
+          "hdi_user": "BAS_LAB_PIRIS_1HZ6D5GPG8TOY9Z2O6W293XAN_DT",
+          "hdi_password": "Td739wyMN5T89y1Vmq27bmQBf2Ks79_ALi-mZtSfmLWMIH-S0URpzYBmjcT8BkNJA9RQbgO-CVm-woGM9BDK0865fthF2Y_rD9_dPyYXxYODDrJTVJP8aR9h5cIXwGYn",
+          "user": "BAS_LAB_PIRIS_1HZ6D5GPG8TOY9Z2O6W293XAN_RT",
+          "password": "Uw0M_BBRxZDVqeEd4TBBKHLtZTSTNCB9lmLdEJ0_TNORzQ7k0oMD7E._ltBcXH4fK_sS-7UXXhIy-30ckYFmy2SPpidy.KD-lih8.Bq8u.9IDVjBMW3azJ0rtxPg5CrN"
+        },
+        "syslog_drain_url": null,
+        "volume_mounts": []
+      }
+    ]
+  }
+}

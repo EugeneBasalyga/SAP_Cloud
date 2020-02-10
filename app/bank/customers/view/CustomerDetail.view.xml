@@ -1,0 +1,251 @@
+<mvc:View
+        xmlns="sap.uxap"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns:layout="sap.ui.layout"
+        xmlns:m="sap.m"
+        xmlns:core="sap.ui.core"
+        xmlns:f="sap.ui.layout.form"
+        controllerName="admin.bank.controller.CustomerDetail">
+    <ObjectPageLayout
+            id="ObjectPageLayout"
+            busyIndicatorDelay="0"
+            upperCaseAnchorBar="false"
+            showFooter="{config>/isEditMode}">
+        <headerTitle>
+            <ObjectPageHeader id="CustomerDetailHeader" objectTitle="{identNumber}">
+                <actions>
+                    <ObjectPageHeaderActionButton text="{i18n>btnEdit}" hideIcon="true" hideText="false" type="Emphasized" press="onEditPress" visible="{= !${config>/isEditMode} }"/>
+                    <ObjectPageHeaderActionButton text="{i18n>btnDelete}" hideIcon="true" hideText="false" press="onDeletePress" visible="{= !${config>/isEditMode} }"/>
+                </actions>
+            </ObjectPageHeader>
+        </headerTitle>
+        <headerContent>
+            <layout:VerticalLayout>
+                <m:Label text="{i18n>name}"/>
+                <m:ObjectAttribute text="{name}"/>
+            </layout:VerticalLayout>
+            <layout:VerticalLayout>
+                <m:Label text="{i18n>surname}"/>
+                <m:ObjectAttribute text="{surname}"/>
+            </layout:VerticalLayout>
+        </headerContent>
+
+        <sections>
+            <ObjectPageSection id="HeaderSection" title="{i18n>customer}" titleUppercase="false">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+
+                            <f:SimpleForm
+                                    id="simpleFormId"
+                                    editable="true"
+                                    layout="ResponsiveGridLayout"
+                                    labelSpanXL="5"
+                                    labelSpanL="5"
+                                    labelSpanM="5"
+                                    labelSpanS="5"
+                                    adjustLabelSpan="true"
+                                    columnsXL="2"
+                                    columnsL="2"
+                                    columnsM="2">
+                                <f:content>
+                                    <core:Title/>
+                                    <m:Label text="{i18n>surname}"/>
+                                    <m:Input
+                                            valueState="Information"
+                                            id="inputSurnameId"
+                                            type="Text"
+                                            value="{surname}"
+                                            enabled="{config>/isEditMode}"/>
+                                    <m:Label text="{i18n>name}"/>
+                                    <m:Input
+                                            valueState="Information"
+                                            id="inputNameId"
+                                            type="Text"
+                                            value="{name}"
+                                            enabled="{config>/isEditMode}"/>
+                                    <m:Label text="{i18n>middleName}"/>
+                                    <m:Input
+                                            valueState="Information"
+                                            id="inputMiddleNameId"
+                                            type="Text"
+                                            value="{middleName}"
+                                            enabled="{config>/isEditMode}"/>
+                                    <m:Label text="{i18n>birthDate}"/>
+                                    <m:DatePicker
+                                            change="onBirthDateChange"
+                                            valueState="Information"
+                                            id="dpBirthDateId"
+                                            enabled="{config>/isEditMode}"
+                                            value="{birthDate}"
+                                            valueFormat="yyyy-MM-dd"/>
+                                    <m:Label text="{i18n>sex}" />
+                                    <m:Select
+                                            valueState="Information"
+                                            id="selSexId"
+                                            forceSelection="false"
+                                            selectedKey="{sex}"
+                                            items="{
+                                                path: 'sexModel>/variants'}"
+                                            enabled="{config>/isEditMode}">
+                                    <core:Item key="{sexModel>key}" text="{sexModel>name}" />
+                                    </m:Select>
+                                    <m:Label text="{i18n>birthPlace}"/>
+                                    <m:Input
+                                            valueState="Information"
+                                            id="inputBirthPlaceId"
+                                            type="Text"
+                                            value="{birthPlace}"
+                                            enabled="{config>/isEditMode}"/>
+                                    <m:Label text="{i18n>actResidenceCity}"/>
+                                    <m:Select
+                                            valueState="Information"
+                                            id="selActResidenceCityId"
+                                            forceSelection="false"
+                                            selectedKey="{path: 'actResCity_id', type: 'sap.ui.model.type.Integer'}"
+                                            items="{
+                                                path: 'odata>/ActualResidenceCity'}"
+                                            enabled="{config>/isEditMode}">
+                                        <core:Item key="{odata>id}" text="{odata>name}" />
+                                    </m:Select>
+                                    <m:Label text="{i18n>actResAddress}"/>
+                                    <m:Input
+                                            valueState="Information"
+                                            id="inputActResAddressId"
+                                            type="Text"
+                                            value="{actResAddress}"
+                                            enabled="{config>/isEditMode}"/>
+                                    <m:Label text="{i18n>regCity}"/>
+                                    <m:Select
+                                            valueState="Information"
+                                            id="selRegCityId"
+                                            forceSelection="false"
+                                            selectedKey="{path: 'regCity_id', type: 'sap.ui.model.type.Integer'}"
+                                            items="{
+                                                path: 'odata>/RegistrationCity'}"
+                                            enabled="{config>/isEditMode}">
+                                        <core:Item key="{odata>id}" text="{odata>name}" />
+                                    </m:Select>
+                                    <m:Label text="{i18n>maritalStatus}"/>
+                                    <m:Select
+                                            valueState="Information"
+                                            id="selMaritalStatusId"
+                                            forceSelection="false"
+                                            selectedKey="{path: 'maritalStatus_id', type: 'sap.ui.model.type.Integer'}"
+                                            items="{
+                                                path: 'odata>/MaritalStatus'}"
+                                            enabled="{config>/isEditMode}">
+                                        <core:Item key="{odata>id}" text="{odata>name}" />
+                                    </m:Select>
+                                    <m:Label text="{i18n>citizenship}"/>
+                                    <m:Select
+                                            valueState="Information"
+                                            id="selCitizenshipId"
+                                            forceSelection="false"
+                                            selectedKey="{path: 'citizenship_id', type: 'sap.ui.model.type.Integer'}"
+                                            items="{
+                                                path: 'odata>/Citizenship'}"
+                                            enabled="{config>/isEditMode}">
+                                        <core:Item key="{odata>id}" text="{odata>name}" />
+                                    </m:Select>
+                                    <m:Label text="{i18n>disability}"/>
+                                    <m:Select
+                                            valueState="Information"
+                                            id="selDisabilityId"
+                                            forceSelection="false"
+                                            selectedKey="{path: 'disability_id', type: 'sap.ui.model.type.Integer'}"
+                                            items="{
+                                                path: 'odata>/Disability'}"
+                                            enabled="{config>/isEditMode}">
+                                        <core:Item key="{odata>id}" text="{odata>name}" />
+                                    </m:Select>
+                                    <m:Label text="{i18n>pensioner}"/>
+                                    <m:CheckBox
+                                            valueState="Information"
+                                            id="cbIsPensionerId"
+                                            enabled="{config>/isEditMode}"
+                                            selected="{isPensioner}"/>
+
+                                    <core:Title/>
+                                    <m:Label text="{i18n>passportSeries}"/>
+                                    <m:Input
+                                            valueState="Information"
+                                            id="inputPassportSeriesId"
+                                            type="Text"
+                                            value="{passportSeries}"
+                                            enabled="{config>/isEditMode}"/>
+                                    <m:Label text="{i18n>passportNumber}"/>
+                                    <m:Input
+                                            valueState="Information"
+                                            id="inputPassportNumberId"
+                                            type="Number"
+                                            value="{passportNumber}"
+                                            enabled="{config>/isEditMode}"/>
+                                    <m:Label text="{i18n>issuedBy}"/>
+                                    <m:Input
+                                            valueState="Information"
+                                            id="inputIssuedById"
+                                            type="Text"
+                                            value="{issuedBy}"
+                                            enabled="{config>/isEditMode}"/>
+                                    <m:Label text="{i18n>issuedWhen}"/>
+                                    <m:DatePicker
+                                            change="onIssuedWhenDateChange"
+                                            valueState="Information"
+                                            id="dpIssuedWhenId"
+                                            enabled="{config>/isEditMode}"
+                                            value="{issuedWhen}"
+                                            valueFormat="yyyy-MM-dd"/>
+                                    <m:Label text="{i18n>identNumber}"/>
+                                    <m:Input
+                                            valueState="Information"
+                                            id="inputIdentNumberId"
+                                            type="Text"
+                                            value="{identNumber}"
+                                            enabled="{config>/isEditMode}"/>
+                                    <m:Label text="{i18n>phoneNumber}"/>
+                                    <m:MaskInput
+                                            id="inputPhoneNumberId"
+                                            mask="+375CCCCCCCCC"
+                                            placeholderSymbol="_"
+                                            value="{phoneNumber}"
+                                            enabled="{config>/isEditMode}">
+                                        <m:rules>
+                                            <m:MaskInputRule maskFormatSymbol="C" regex="[0-9]"/>
+                                        </m:rules>
+                                    </m:MaskInput>
+<!--                                    <m:Input-->
+<!--                                            id="inputPhoneNumberId"-->
+<!--                                            type="Text"-->
+<!--                                            value="{phoneNumber}"-->
+<!--                                            enabled="{config>/isEditMode}"/>-->
+                                    <m:Label text="{i18n>workPlace}"/>
+                                    <m:Input
+                                            id="inputWorkPlaceId"
+                                            type="Text"
+                                            value="{workPlace}"
+                                            enabled="{config>/isEditMode}"/>
+                                    <m:Label text="{i18n>workPosition}"/>
+                                    <m:Input
+                                            id="inputWorkPositionId"
+                                            type="Text"
+                                            value="{workPosition}"
+                                            enabled="{config>/isEditMode}"/>
+                                </f:content>
+                            </f:SimpleForm>
+
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+
+        <footer>
+            <m:OverflowToolbar>
+                <m:ToolbarSpacer />
+                <m:Button type="Emphasized" text="{i18n>footerSave}" press="onSaveBtnPress"/>
+                <m:Button text="{i18n>footerCancel}" press="onCancelBtnPress"/>
+            </m:OverflowToolbar>
+        </footer>
+    </ObjectPageLayout>
+</mvc:View>

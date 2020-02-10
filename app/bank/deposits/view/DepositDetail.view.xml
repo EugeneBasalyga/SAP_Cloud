@@ -1,0 +1,121 @@
+<mvc:View
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m"
+        xmlns:ux="sap.uxap"
+        xmlns:f="sap.ui.layout.form"
+        xmlns:core="sap.ui.core"
+        controllerName="admin.deposits.controller.DepositDetail">
+<ux:ObjectPageLayout
+        id="ObjectPageLayout"
+        busyIndicatorDelay="0"
+        upperCaseAnchorBar="false"
+        showFooter="{config>/isCreateMode}">
+    <ux:sections>
+        <ux:ObjectPageSection id="HeaderSection" title="{i18n>deposit}" titleUppercase="false">
+            <ux:subSections>
+                <ux:ObjectPageSubSection>
+                    <ux:blocks>
+                        <VBox class="sapUiSmallMargin">
+                            <f:SimpleForm
+                                          editable="true"
+                                          layout="ResponsiveGridLayout"
+                                          labelSpanXL="4"
+                                          labelSpanL="4"
+                                          labelSpanM="4"
+                                          labelSpanS="4"
+                                          adjustLabelSpan="false"
+                                          emptySpanXL="0"
+                                          emptySpanL="2"
+                                          emptySpanM="0"
+                                          emptySpanS="0"
+                                          columnsXL="2"
+                                          columnsL="2"
+                                          columnsM="2"
+                                          singleContainerFullSize="false">
+                                <f:content>
+                                    <Label text="{i18n>depositCustomer}" />
+                                    <Select
+                                            valueState="Information"
+                                            id="selDepositCustomerId"
+                                            forceSelection="false"
+                                            selectedKey="{path: 'customer_id', type: 'sap.ui.model.type.Integer'}"
+                                            items="{
+                                                path: 'odata>/Customers'}"
+                                            enabled="{config>/isCreateMode}">
+                                        <core:Item key="{odata>id}" text="{odata>surname} {odata>name} {odata>middleName}" />
+                                    </Select>
+                                    <Label text="{i18n>depositContractNumber}" visible="{= !${config>/isCreateMode}}"/>
+                                    <Input
+                                            valueState="Information"
+                                            id="inputContractNumberId"
+                                            type="Number"
+                                            value="{contract_number}"
+                                            enabled="{config>/isCreateMode}"
+                                            visible="{= !${config>/isCreateMode}}"/>
+                                    <Label text="{i18n>depositType}" />
+                                    <Select
+                                            valueState="Information"
+                                            id="selDepositTypeId"
+                                            forceSelection="false"
+                                            selectedKey="{path: 'type_id', type: 'sap.ui.model.type.Integer'}"
+                                            items="{
+                                                path: 'odata>/DepositType'}"
+                                            enabled="{config>/isCreateMode}">
+                                    <core:Item key="{odata>id}" text="{odata>name}" />
+                                    </Select>
+                                    <Label text="{i18n>depositCurrency}" />
+                                    <Select
+                                            valueState="Information"
+                                            id="selDepositCurrencyId"
+                                            forceSelection="false"
+                                            selectedKey="{path: 'currency_id', type: 'sap.ui.model.type.Integer'}"
+                                            items="{
+                                                path: 'odata>/DepositCurrency'}"
+                                            enabled="{config>/isCreateMode}">
+                                    <core:Item key="{odata>id}" text="{odata>name}" />
+                                    </Select>
+                                    <Label text="{i18n>depositInitialSum}" />
+                                    <Input
+                                            valueState="Information"
+                                            id="inputDepositInitialSumId"
+                                            value="{initialSum}"
+                                            enabled="{config>/isCreateMode}"/>
+                                    <Label text="{i18n>depositPercentage}" />
+                                    <Select
+                                            valueState="Information"
+                                            id="selDepositPercentageId"
+                                            forceSelection="false"
+                                            selectedKey="{path: 'percentage', type: 'sap.ui.model.type.Integer'}"
+                                            items="{
+                                                path: 'depositPercentageModel>/variants'}"
+                                            enabled="{config>/isCreateMode}">
+                                        <core:Item key="{depositPercentageModel>key}" text="{depositPercentageModel>name}" />
+                                    </Select>
+                                    <Label text="{i18n>depositBalance}" />
+                                    <Input
+                                            valueState="Information"
+                                            id="inputDepositBalanceId"
+                                            value="{curBalance}"
+                                            enabled="{config>/isCreateMode}"
+                                            visible="{= !${config>/isCreateMode}}"/>
+                                </f:content>
+                            </f:SimpleForm>
+                        </VBox>
+
+                    </ux:blocks>
+                </ux:ObjectPageSubSection>
+            </ux:subSections>
+        </ux:ObjectPageSection>
+    </ux:sections>
+
+    <ux:footer>
+        <OverflowToolbar>
+            <ToolbarSpacer />
+            <Button type="Emphasized" text="{i18n>footerCreate}" press="onCreateBtnPress"/>
+            <Button text="{i18n>footerCancel}" press="onCancelBtnPress"/>
+        </OverflowToolbar>
+    </ux:footer>
+
+</ux:ObjectPageLayout>
+
+</mvc:View>
