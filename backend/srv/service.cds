@@ -10,4 +10,7 @@ service CatalogService {
     entity Deposit as projection on db.Deposit;
     entity DepositType as projection on db.DepositType;
     entity DepositCurrency as projection on db.DepositCurrency;
+    entity Loan as projection on db.Loan;
+    entity LoanType as projection on db.LoanType;
+    entity LoanCurrency as projection on db.LoanCurrency;
 }

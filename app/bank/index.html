@@ -23,6 +23,14 @@
                     url: "./deposits",
                     navigationMode: "embedded"
                 },
+                "bank-loans": {
+                    title: "Bank Loans",
+                    description: "Manage Bank Loans",
+                    additionalInformation: "SAPUI5.Component=loan",
+                    applicationType: "URL",
+                    url: "./loans",
+                    navigationMode: "embedded"
+                }
             }
         };
     </script>
@@ -33,7 +41,7 @@
             data-sap-ui-libs="sap.m, sap.ushell, sap.collaboration, sap.ui.layout"
             data-sap-ui-theme="sap_fiori_3"
             data-sap-ui-compatVersion="edge"
-            data-sap-ui-resourceroots='{"admin.bank": "./customers", "admin.deposits": "./deposits"}'>
+            data-sap-ui-resourceroots='{"admin.bank": "./customers", "admin.deposits": "./deposits", "admin.loans": "./loans"}'>
     </script>
     <script>
         sap.ui.getCore().attachInit(() => sap.ushell.Container.createRenderer().placeAt('content'))

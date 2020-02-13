@@ -1,5 +1,5 @@
 <mvc:View
-        controllerName="admin.deposits.controller.Master"
+        controllerName="admin.loans.controller.Master"
         xmlns:semantic="sap.f.semantic"
         xmlns:mvc="sap.ui.core.mvc"
         xmlns="sap.m">
@@ -13,10 +13,10 @@
 
         <semantic:content>
             <Table
-                    id="idDepositsTable"
+                    id="idLoansTable"
                     inset="false"
                     mode="SingleSelectLeft"
-                    items="{ path : 'bank>/Deposit', sorter : [ { path : 'customer/surname'} ]}"
+                    items="{ path : 'bank>/Loan', sorter : [ { path : 'customer/surname'} ]}"
                     itemPress="onItemPress"
                     selectionChange="onItemSelected"
                     growing="true" growingScrollToLoad="true"
@@ -27,9 +27,9 @@
                             <Title text="{i18n>appTitle}" level="H2"/>
                             <ToolbarSpacer/>
                             <Button text="{i18n>btnCloseBankingMonth}" icon="sap-icon://wallet" press="onCloseBankingMonth"> </Button>
-                            <Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onCreateDeposit"> </Button>
-                            <Button text="{i18n>btnClose}" icon="sap-icon://decline" press="onCloseDeposit" enabled="{tableButtons>/isCloseBtnEnabled}"> </Button>
-                            <Button text="{i18n>btnWithdrawPercents}" icon="sap-icon://waiver" press="onWithdrawPercents" enabled="{tableButtons>/isWithdrawBtnEnabled}"> </Button>
+                            <Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onCreateLoan"> </Button>
+                            <Button text="{i18n>btnRepayMonth}" icon="sap-icon://appointment-2" press="onRepayMonth"> </Button>
+                            <Button text="{i18n>btnRepayLoan}" icon="sap-icon://loan" press="onRepayLoan"> </Button>
                         </content>
                     </OverflowToolbar>
                 </headerToolbar>
@@ -38,37 +38,47 @@
                     <Column
                             minScreenWidth="Tablet"
                             demandPopin="true">
-                        <Text text="{i18n>depositContractNumber}"/>
+                        <Text text="{i18n>loanContractNumber}"/>
                     </Column>
                     <Column
                             minScreenWidth="Tablet"
                             demandPopin="true">
-                        <Text text="{i18n>depositCustomerSurname}"/>
+                        <Text text="{i18n>loanCustomerSurname}"/>
                     </Column>
                     <Column
                             minScreenWidth="Tablet"
                             demandPopin="true">
-                        <Text text="{i18n>depositCustomerName}"/>
+                        <Text text="{i18n>loanCustomerName}"/>
                     </Column>
                     <Column
                             minScreenWidth="Tablet"
                             demandPopin="true">
-                        <Text text="{i18n>depositType}"/>
+                        <Text text="{i18n>loanType}"/>
                     </Column>
                     <Column
                             minScreenWidth="Tablet"
                             demandPopin="true">
-                        <Text text="{i18n>depositInitialSum}"/>
+                        <Text text="{i18n>loanContractTermMonth}"/>
                     </Column>
                     <Column
                             minScreenWidth="Tablet"
                             demandPopin="true">
-                        <Text text="{i18n>depositBalance}"/>
+                        <Text text="{i18n>loanInitialSum}"/>
                     </Column>
                     <Column
                             minScreenWidth="Tablet"
                             demandPopin="true">
-                        <Text text="{i18n>depositPercentage}"/>
+                        <Text text="{i18n>loanPercentage}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>loanPaymentPerMonth}"/>
+                    </Column>
+                    <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="{i18n>loanTotalSum}"/>
                     </Column>
                 </columns>
 
@@ -76,23 +86,30 @@
                     <ColumnListItem type="Navigation"
                                     vAlign="Middle">
                         <cells>
-                            <Text text="{bank>contract_number}"/>
+                            <Text text="{bank>contractNumber}"/>
                             <Text text="{bank>customer/surname}"/>
                             <Text text="{bank>customer/name}"/>
                             <Text text="{bank>type/name}"/>
+                            <Text text="{bank>contractTermMonth}"/>
                             <ObjectNumber
                                     number="{
                                         parts:[{path:'bank>initialSum'},{path:'bank>currency/name'}],
                                         type: 'sap.ui.model.type.Currency',
                                         formatOptions: {showMeasure: false}}"
                                     unit="{bank>currency/name}" />
+                            <Text text="{bank>percentage}%"/>
                             <ObjectNumber
                                     number="{
-                                        parts:[{path:'bank>curBalance'},{path:'bank>currency/name'}],
+                                        parts:[{path:'bank>paymentPerMonth'},{path:'bank>currency/name'}],
                                         type: 'sap.ui.model.type.Currency',
                                         formatOptions: {showMeasure: false}}"
                                     unit="{bank>currency/name}" />
-                            <Text text="{bank>percentage}%"/>
+                            <ObjectNumber
+                                    number="{
+                                        parts:[{path:'bank>totalSum'},{path:'bank>currency/name'}],
+                                        type: 'sap.ui.model.type.Currency',
+                                        formatOptions: {showMeasure: false}}"
+                                    unit="{bank>currency/name}" />
                         </cells>
                     </ColumnListItem>
                 </items>

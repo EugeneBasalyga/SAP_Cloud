@@ -97,4 +97,18 @@ module.exports = function () {
         }
     });
 
+
+    this.before("CREATE", "Deposit", async (req) => {
+        var client = await dbClass.createConnection();
+        let db = new dbClass(client);
+        const sSql = "SELECT * FROM \"COM_BANK_DEPOSIT\"";
+        const aDeposits = await db.executeQuery(sSql, []);
+        aDeposits.sort((firstEl, secondEl) => {
+            return firstEl.ID > secondEl.ID;
+        });
+        let oNewDeposit = req.data;
+        oNewDeposit.id = aDeposits[aDeposits.length - 1].ID + 1;
+        oNewDeposit.contract_number = Math.floor(Math.random()*(9999999999999 - 1000000000000 + 1) + 1000000000000).toString();
+        oNewDeposit.curBalance = oNewDeposit.initialSum;
+    });
 };

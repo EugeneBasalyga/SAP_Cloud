@@ -4,7 +4,7 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/m/MessageBox",
     "sap/ui/core/routing/History"
-], function (BaseController, JSONModel, MessageToast, MessageBox, History) {
+], function (BaseController, JSONModel, MessageToast, MessageBox) {
     "use strict";
 
 
@@ -49,6 +49,7 @@ sap.ui.define([
         },
 
         onDepositDetailRouteMatched: function (oEvent) {
+            this._initInputInputFields();
             let id = oEvent.getParameter("arguments").id;
             this.oConfigModel.setProperty("/isCreateMode", false);
             this.getView().unbindObject();
@@ -94,34 +95,106 @@ sap.ui.define([
         },
 
         onCreateBtnPress: function (oEvent) {
-            const oNewDeposit = this.getModel().getData();
-            const oBinding = this.getOwnerComponent().getModel().bindList("/Deposit");
-            this._setBusy(true);
-            oBinding.attachCreateCompleted(function (oEvent) {
-                let oContext = oEvent.getParameter("context");
-                let bSuccess = oEvent.getParameter("success");
-                if (!bSuccess) {
-                    let messages = oContext.getModel().getMessagesByPath("");
-                    let message = messages[messages.length - 1].message;
-                    MessageBox.error(message, {
-                        title: this.getResourceBundle().getText("error")
-                    });
-                    this._setBusy(false);
-                }
-            }.bind(this));
-            const oContext = oBinding.create(oNewDeposit);
+            if (this.areInputFieldsValid()){
+                const oNewDeposit = this.getModel().getData();
+                oNewDeposit.initialSum = oNewDeposit.initialSum.toString();
+                const oBinding = this.getOwnerComponent().getModel().bindList("/Deposit");
+                this._setBusy(true);
+                oBinding.attachCreateCompleted(function (oEvent) {
+                    let oContext = oEvent.getParameter("context");
+                    let bSuccess = oEvent.getParameter("success");
+                    if (!bSuccess) {
+                        let messages = oContext.getModel().getMessagesByPath("");
+                        let message = messages[messages.length - 1].message;
+                        MessageBox.error(message, {
+                            title: this.getResourceBundle().getText("error")
+                        });
+                        this._setBusy(false);
+                    }
+                }.bind(this));
+                const oContext = oBinding.create(oNewDeposit);
 
-            //TODO catch doesn't work
-            oContext.created()
-                .then(() => {
-                    this._setBusy(false);
-                    MessageToast.show(this.getResourceBundle().getText("successCreate"));
-                    this.getRouter().navTo("master", true);
-                })
-                .catch((oError) => {
-                    this._setBusy(false);
-                    //TODO
-                });
+                //TODO catch doesn't work
+                oContext.created()
+                    .then(() => {
+                        this._setBusy(false);
+                        MessageToast.show(this.getResourceBundle().getText("successCreate"));
+                        this.getRouter().navTo("master", true);
+                    })
+                    .catch((oError) => {
+                        this._setBusy(false);
+                        //TODO
+                    });
+            }
+        },
+
+        areInputFieldsValid: function () {
+            let bValid = true;
+            const oNewDeposit = this.getModel().getData();
+
+            if (oNewDeposit.customer_id === null){
+                this.getView().byId("selDepositCustomerId").setValueState(sap.ui.core.ValueState.Error);
+                this.getView().byId("selDepositCustomerId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+                bValid = false;
+            }
+            else{
+                this.getView().byId("selDepositCustomerId").setValueState(sap.ui.core.ValueState.Information);
+                this.getView().byId("selDepositCustomerId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+            }
+
+            if (oNewDeposit.type_id === null){
+                this.getView().byId("selDepositTypeId").setValueState(sap.ui.core.ValueState.Error);
+                this.getView().byId("selDepositTypeId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+                bValid = false;
+            }
+            else{
+                this.getView().byId("selDepositTypeId").setValueState(sap.ui.core.ValueState.Information);
+                this.getView().byId("selDepositTypeId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+            }
+
+            if (oNewDeposit.currency_id === null){
+                this.getView().byId("selDepositCurrencyId").setValueState(sap.ui.core.ValueState.Error);
+                this.getView().byId("selDepositCurrencyId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+                bValid = false;
+            }
+            else{
+                this.getView().byId("selDepositCurrencyId").setValueState(sap.ui.core.ValueState.Information);
+                this.getView().byId("selDepositCurrencyId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+            }
+
+            if (isNaN(parseFloat(oNewDeposit.initialSum))){
+                this.getView().byId("inputDepositInitialSumId").setValueState(sap.ui.core.ValueState.Error);
+                this.getView().byId("inputDepositInitialSumId").setValueStateText(this.getResourceBundle().getText("errorInitialSum"));
+                bValid = false;
+            }
+            else{
+                this.getView().byId("inputDepositInitialSumId").setValueState(sap.ui.core.ValueState.Information);
+                this.getView().byId("inputDepositInitialSumId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+            }
+
+            if (oNewDeposit.percentage === null){
+                this.getView().byId("selDepositPercentageId").setValueState(sap.ui.core.ValueState.Error);
+                this.getView().byId("selDepositPercentageId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+                bValid = false;
+            }
+            else{
+                this.getView().byId("selDepositPercentageId").setValueState(sap.ui.core.ValueState.Information);
+                this.getView().byId("selDepositPercentageId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+            }
+            return bValid;
+        },
+
+        _initInputInputFields: function() {
+            this.getView().byId("selDepositCustomerId").setValueState(sap.ui.core.ValueState.Information);
+            this.getView().byId("selDepositCustomerId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+            this.getView().byId("selDepositTypeId").setValueState(sap.ui.core.ValueState.Information);
+            this.getView().byId("selDepositTypeId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+            this.getView().byId("selDepositCurrencyId").setValueState(sap.ui.core.ValueState.Information);
+            this.getView().byId("selDepositCurrencyId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+            this.getView().byId("inputDepositInitialSumId").setValueState(sap.ui.core.ValueState.Information);
+            this.getView().byId("inputDepositInitialSumId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
+            this.getView().byId("selDepositPercentageId").setValueState(sap.ui.core.ValueState.Information);
+            this.getView().byId("selDepositPercentageId").setValueStateText(this.getResourceBundle().getText("obligatoryField"));
         }
     });
 });

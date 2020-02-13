@@ -25,7 +25,7 @@
                         <content>
                             <Title text="{i18n>appTitle}" level="H2"/>
                             <ToolbarSpacer/>
-                            <Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onCreateCustomer"> </Button>
+                            <Button text="{i18n>btnAdd}" icon="sap-icon://add-employee" press="onCreateCustomer"> </Button>
                             <Button text="{i18n>btnDelete}" icon="sap-icon://delete" press="onDeleteCustomer"> </Button>
                         </content>
                     </OverflowToolbar>

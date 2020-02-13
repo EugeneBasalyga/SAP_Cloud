@@ -24,6 +24,7 @@ entity Customer {
     disability: Association to Disability;
     isPensioner: Boolean;
     deposits: Association to many Deposit on deposits.customer = $self;
+    loans: Association to many Loan on loans.customer = $self;
 };
 
 entity ActualResidenceCity {
@@ -79,4 +80,29 @@ entity DepositCurrency {
     key id: Integer;
     name: String(50);
     deposits: Association to many Deposit on deposits.currency = $self;
+}
+
+entity Loan {
+    key id: Integer;
+    customer: Association to Customer;
+    contractNumber: String(50);
+    contractTermMonth: Integer;
+    initialSum: DecimalFloat;
+    percentage: Integer;
+    paymentPerMonth: DecimalFloat;
+    totalSum: DecimalFloat;
+    type: Association to LoanType;
+    currency: Association to LoanCurrency;
+}
+
+entity LoanType {
+    key id: Integer;
+    name: String(50);
+    loans: Association to many Loan on loans.type = $self;
+}
+
+entity LoanCurrency {
+    key id: Integer;
+    name: String(50);
+    loans: Association to many Loan on loans.currency = $self;
 }

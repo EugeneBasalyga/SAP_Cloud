@@ -1,0 +1,156 @@
+<mvc:View
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m"
+        xmlns:ux="sap.uxap"
+        xmlns:f="sap.ui.layout.form"
+        xmlns:core="sap.ui.core"
+        controllerName="admin.loans.controller.LoanDetail">
+    <ux:ObjectPageLayout
+            id="ObjectPageLayout"
+            busyIndicatorDelay="0"
+            upperCaseAnchorBar="false"
+            showFooter="{config>/isCreateMode}">
+        <ux:sections>
+            <ux:ObjectPageSection id="HeaderSection" title="{i18n>loan}" titleUppercase="false">
+                <ux:subSections>
+                    <ux:ObjectPageSubSection>
+                        <ux:blocks>
+                            <VBox class="sapUiSmallMargin">
+                                <f:SimpleForm
+                                        editable="true"
+                                        layout="ResponsiveGridLayout"
+                                        labelSpanXL="6"
+                                        labelSpanL="6"
+                                        labelSpanM="6"
+                                        labelSpanS="6"
+                                        adjustLabelSpan="false"
+                                        emptySpanXL="0"
+                                        emptySpanL="0"
+                                        emptySpanM="0"
+                                        emptySpanS="0"
+                                        columnsXL="2"
+                                        columnsL="2"
+                                        columnsM="2"
+                                        singleContainerFullSize="false">
+                                    <f:content>
+                                        <Label text="{i18n>loanCustomer}" />
+                                        <Select
+                                                valueState="Information"
+                                                id="selLoanCustomerId"
+                                                forceSelection="false"
+                                                selectedKey="{path: 'customer_id', type: 'sap.ui.model.type.Integer'}"
+                                                items="{
+                                                path: 'odata>/Customers'}"
+                                                enabled="{config>/isCreateMode}">
+                                            <core:Item key="{odata>id}" text="{odata>surname} {odata>name} {odata>middleName}" />
+                                        </Select>
+                                        <Label text="{i18n>loanContractNumber}" visible="{= !${config>/isCreateMode}}"/>
+                                        <Input
+                                                valueState="Information"
+                                                id="inputContractNumberId"
+                                                type="Number"
+                                                value="{contractNumber}"
+                                                enabled="{config>/isCreateMode}"
+                                                visible="{= !${config>/isCreateMode}}"/>
+                                        <Label text="{i18n>loanType}" />
+                                        <Select
+                                                valueState="Information"
+                                                id="selLoanTypeId"
+                                                forceSelection="false"
+                                                selectedKey="{path: 'type_id', type: 'sap.ui.model.type.Integer'}"
+                                                items="{
+                                                path: 'odata>/LoanType'}"
+                                                enabled="{config>/isCreateMode}">
+                                            <core:Item key="{odata>id}" text="{odata>name}" />
+                                        </Select>
+                                        <Label text="{i18n>loanCurrency}" />
+                                        <Select
+                                                valueState="Information"
+                                                id="selLoanCurrencyId"
+                                                forceSelection="false"
+                                                selectedKey="{path: 'currency_id', type: 'sap.ui.model.type.Integer'}"
+                                                items="{
+                                                path: 'odata>/LoanCurrency'}"
+                                                enabled="{config>/isCreateMode}">
+                                            <core:Item key="{odata>id}" text="{odata>name}" />
+                                        </Select>
+                                        <Label text="{i18n>loanContractTermMonth}" />
+                                        <Input
+                                                valueState="Information"
+                                                id="inputLoanContractTermMonthId"
+                                                value="{path: 'contractTermMonth'}"
+                                                type="Number"
+                                                enabled="{config>/isCreateMode}"/>
+                                        <Label text="{i18n>loanInitialSum}" />
+                                        <Input
+                                                valueState="Information"
+                                                id="inputLoanInitialSumId"
+                                                value="{
+                                                path: 'initialSum',
+                                                type: 'sap.ui.model.type.Float',
+                                                    formatOptions: {
+                                                        minFractionDigits: 2,
+                                                        maxFractionDigits: 2
+                                                    }
+                                                }"
+                                                enabled="{config>/isCreateMode}"/>
+                                        <Label text="{i18n>loanPercentage}" />
+                                        <Select
+                                                valueState="Information"
+                                                id="selLoanPercentageId"
+                                                forceSelection="false"
+                                                selectedKey="{path: 'percentage', type: 'sap.ui.model.type.Integer'}"
+                                                items="{
+                                                path: 'loanPercentageModel>/variants'}"
+                                                enabled="{config>/isCreateMode}">
+                                            <core:Item key="{loanPercentageModel>key}" text="{loanPercentageModel>name}" />
+                                        </Select>
+                                        <Label text="{i18n>loanPaymentPerMonth}" visible="{= !${config>/isCreateMode}}"/>
+                                        <Input
+                                                valueState="Information"
+                                                id="inputLoanPaymentPerMonthId"
+                                                value="{
+                                                path: 'paymentPerMonth',
+                                                type: 'sap.ui.model.type.Float',
+                                                    formatOptions: {
+                                                        minFractionDigits: 2,
+                                                        maxFractionDigits: 2
+                                                    }
+                                                }"
+                                                enabled="{config>/isCreateMode}"
+                                                visible="{= !${config>/isCreateMode}}"/>
+                                        <Label text="{i18n>loanTotalSum}" visible="{= !${config>/isCreateMode}}"/>
+                                        <Input
+                                                valueState="Information"
+                                                id="inputLoanTotalSumId"
+                                                value="{
+                                                path: 'totalSum',
+                                                type: 'sap.ui.model.type.Float',
+                                                    formatOptions: {
+                                                        minFractionDigits: 2,
+                                                        maxFractionDigits: 2
+                                                    }
+                                                }"
+                                                enabled="{config>/isCreateMode}"
+                                                visible="{= !${config>/isCreateMode}}"/>
+                                    </f:content>
+                                </f:SimpleForm>
+                            </VBox>
+
+                        </ux:blocks>
+                    </ux:ObjectPageSubSection>
+                </ux:subSections>
+            </ux:ObjectPageSection>
+        </ux:sections>
+
+        <ux:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button type="Emphasized" text="{i18n>footerCreate}" press="onCreateBtnPress"/>
+                <Button text="{i18n>footerCancel}" press="onCancelBtnPress"/>
+            </OverflowToolbar>
+        </ux:footer>
+
+    </ux:ObjectPageLayout>
+
+</mvc:View>
