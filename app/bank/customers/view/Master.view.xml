@@ -16,7 +16,14 @@
                     id="idCustomersTable"
                     inset="false"
                     mode="SingleSelectLeft"
-                    items="{ path : 'bank>/Customers', sorter : [ { path : 'surname'} ]}"
+                    items="{
+                        path : 'bank>/Customers',
+                        parameters :
+                        {
+                            $expand : 'loans'
+                        },
+                        sorter : [ { path : 'surname'} ]
+                    }"
                     itemPress="onItemPress"
                     growing="true" growingScrollToLoad="true"
                     growingThreshold="100">

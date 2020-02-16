@@ -28,8 +28,8 @@
                             <ToolbarSpacer/>
                             <Button text="{i18n>btnCloseBankingMonth}" icon="sap-icon://wallet" press="onCloseBankingMonth"> </Button>
                             <Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onCreateLoan"> </Button>
-                            <Button text="{i18n>btnRepayMonth}" icon="sap-icon://appointment-2" press="onRepayMonth"> </Button>
-                            <Button text="{i18n>btnRepayLoan}" icon="sap-icon://loan" press="onRepayLoan"> </Button>
+                            <Button text="{i18n>btnRepayMonth}" icon="sap-icon://appointment-2" press="onRepayMonth" enabled="{tableButtons>/isBtnRepayMonthEnabled}"> </Button>
+                            <Button text="{i18n>btnRepayLoan}" icon="sap-icon://loan" press="onRepayLoan" enabled="{tableButtons>/isBtnRepayLoanEnabled}"> </Button>
                         </content>
                     </OverflowToolbar>
                 </headerToolbar>
@@ -54,11 +54,6 @@
                             minScreenWidth="Tablet"
                             demandPopin="true">
                         <Text text="{i18n>loanType}"/>
-                    </Column>
-                    <Column
-                            minScreenWidth="Tablet"
-                            demandPopin="true">
-                        <Text text="{i18n>loanContractTermMonth}"/>
                     </Column>
                     <Column
                             minScreenWidth="Tablet"
@@ -90,7 +85,6 @@
                             <Text text="{bank>customer/surname}"/>
                             <Text text="{bank>customer/name}"/>
                             <Text text="{bank>type/name}"/>
-                            <Text text="{bank>contractTermMonth}"/>
                             <ObjectNumber
                                     number="{
                                         parts:[{path:'bank>initialSum'},{path:'bank>currency/name'}],

@@ -111,4 +111,36 @@ module.exports = function () {
         oNewDeposit.contract_number = Math.floor(Math.random()*(9999999999999 - 1000000000000 + 1) + 1000000000000).toString();
         oNewDeposit.curBalance = oNewDeposit.initialSum;
     });
+
+    this.before("CREATE", "Loan", async (req) => {
+        var client = await dbClass.createConnection();
+        let db = new dbClass(client);
+        const sSql = "SELECT * FROM \"COM_BANK_LOAN\"";
+        const aLoans = await db.executeQuery(sSql, []);
+        aLoans.sort((firstEl, secondEl) => {
+            return firstEl.ID > secondEl.ID;
+        });
+        let oNewLoan = req.data;
+        if (aLoans.length !== 0){
+            oNewLoan.id = aLoans[aLoans.length - 1].ID + 1;
+        }
+        oNewLoan.contractNumber = Math.floor(Math.random()*(9999999999999 - 1000000000000 + 1) + 1000000000000).toString();
+        var percentageRateMonth;
+        var annuityFactor;
+        if (oNewLoan.type_id === 1){
+            percentageRateMonth = oNewLoan.percentage / 12 / 100;
+            annuityFactor = (percentageRateMonth * Math.pow(percentageRateMonth + 1, oNewLoan.contractTermMonth)) / (Math.pow(percentageRateMonth + 1, oNewLoan.contractTermMonth) - 1);
+            oNewLoan.paymentPerMonth = annuityFactor * oNewLoan.initialSum;
+            oNewLoan.totalSum = oNewLoan.paymentPerMonth * oNewLoan.contractTermMonth - oNewLoan.paymentPerMonth;
+        } else if (oNewLoan.type_id === 2){
+            var coef = oNewLoan.percentage / 100 / 365 * 30;
+            var creditBody = oNewLoan.initialSum / oNewLoan.contractTermMonth;
+            oNewLoan.paymentPerMonth = creditBody + coef * oNewLoan.initialSum;
+            var initSum = oNewLoan.initialSum;
+            while (initSum >= 0){
+                oNewLoan.totalSum = oNewLoan.totalSum + (initSum - creditBody) * coef + creditBody;
+                initSum = initSum - creditBody;
+            }
+        }
+    });
 };

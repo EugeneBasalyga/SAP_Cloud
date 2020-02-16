@@ -9,7 +9,6 @@ sap.ui.define([
         onInit: function () {
             let oModel = this.getOwnerComponent().getModel();
             this.getView().setModel(oModel, "bank");
-
             this.getRouter().getRoute("master").attachMatched(() =>
                 this.byId("idCustomersTable").getBinding("items").refresh());
         },
@@ -29,15 +28,24 @@ sap.ui.define([
 
         onDeleteCustomer: function(oEvent){
             const oSelectedEntry = this.getView().byId("idCustomersTable").getSelectedItem();
+
             if (!oSelectedEntry) {
                 MessageToast.show(this.getResourceBundle().getText("selectCustomer"));
                 return;
             }
 
-            MessageBox.confirm(this.getResourceBundle().getText("questionDelete"), {
-                title: this.getResourceBundle().getText("deleteCustomer"),
-                onClose: this._deleteCustomer.bind(this)
-            });
+            var oCustomer = oSelectedEntry.getBindingContext("bank").getObject();
+            if (oCustomer.loans.length === 0){
+                MessageBox.confirm(this.getResourceBundle().getText("questionDelete"), {
+                    title: this.getResourceBundle().getText("deleteCustomer"),
+                    onClose: this._deleteCustomer.bind(this)
+                });
+            } else {
+                MessageBox.information(this.getResourceBundle().getText("unableToDelete"), {
+                    title: this.getResourceBundle().getText("unableToDeleteInfo")
+                });
+            }
+
         },
 
         _deleteCustomer: function (sAnswer) {

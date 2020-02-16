@@ -84,7 +84,8 @@ sap.ui.define([
                 this.getView().bindElement({
                     path: `/Customers(${id})`,
                     parameters: {
-                        $$updateGroupId: this.BATCH_ID
+                        $$updateGroupId: this.BATCH_ID,
+                        $expand: "loans"
                     },
                     events: {
                         dataRequested: () => this._setBusy(true),
@@ -110,11 +111,17 @@ sap.ui.define([
         },
 
         onDeletePress: function (oEvent) {
-            MessageBox.confirm(this.getResourceBundle().getText("questionDelete"), {
-                title: this.getResourceBundle().getText("deleteCustomer"),
-                onClose: this._deleteCustomer.bind(this)
-            });
-
+            var oCustomer = this.getView().getBindingContext().getObject();
+            if (oCustomer.loans.length === 0){
+                MessageBox.confirm(this.getResourceBundle().getText("questionDelete"), {
+                    title: this.getResourceBundle().getText("deleteCustomer"),
+                    onClose: this._deleteCustomer.bind(this)
+                });
+            } else {
+                MessageBox.information(this.getResourceBundle().getText("unableToDelete"), {
+                    title: this.getResourceBundle().getText("unableToDeleteInfo")
+                });
+            }
         },
 
         _deleteCustomer: function (sAnswer) {
