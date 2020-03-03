@@ -91,6 +91,9 @@ entity Loan {
     percentage: Integer;
     paymentPerMonth: DecimalFloat;
     totalSum: DecimalFloat;
+    currSum: DecimalFloat;
+    cardNumber: String(20);
+    pin: Integer;
     type: Association to LoanType;
     currency: Association to LoanCurrency;
 }

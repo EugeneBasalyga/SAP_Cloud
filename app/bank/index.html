@@ -30,6 +30,14 @@
                     applicationType: "URL",
                     url: "./loans",
                     navigationMode: "embedded"
+                },
+                "bank-cashDispenser": {
+                    title: "Cash Dispenser",
+                    description: "Cash Dispenser",
+                    additionalInformation: "SAPUI5.Component=cashDispenser",
+                    applicationType: "URL",
+                    url: "./cashDispenser",
+                    navigationMode: "embedded"
                 }
             }
         };
@@ -41,7 +49,11 @@
             data-sap-ui-libs="sap.m, sap.ushell, sap.collaboration, sap.ui.layout"
             data-sap-ui-theme="sap_fiori_3"
             data-sap-ui-compatVersion="edge"
-            data-sap-ui-resourceroots='{"admin.bank": "./customers", "admin.deposits": "./deposits", "admin.loans": "./loans"}'>
+            data-sap-ui-resourceroots=
+                '{"admin.bank": "./customers",
+                  "admin.deposits": "./deposits",
+                  "admin.loans": "./loans",
+                  "admin.cashDispenser": "./cashDispenser"}'>
     </script>
     <script>
         sap.ui.getCore().attachInit(() => sap.ushell.Container.createRenderer().placeAt('content'))

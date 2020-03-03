@@ -1,0 +1,212 @@
+<mvc:View
+        controllerName="admin.cashDispenser.controller.Master"
+        xmlns:l="sap.ui.layout"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns:f="sap.ui.layout.form"
+        xmlns="sap.m"
+        xmlns:core="sap.ui.core"
+        xmlns:tnt="sap.tnt">
+
+    <Page class="backgroundImage">
+        <l:Grid defaultSpan="L12 M7 S12" width="auto" visible="{config>/logInVisible}">
+            <l:content>
+                <f:SimpleForm id="simpleFormLogInId" maxContainerCols="2" layout="ResponsiveLayout" editable="true">
+                    <f:content>
+                        <Label text="{i18n>cardNumber}"  labelFor="inputCardNumberId"/>
+                        <MaskInput
+                                id="inputCardNumberId"
+                                valueState="Information"
+                                mask="CCCCCCCCCCCCCCCC"
+                                placeholderSymbol="_"
+                                required="true"
+                                width="40%"
+                                value="{credentials>/cardNumber}">
+                            <rules>
+                                <MaskInputRule maskFormatSymbol="C" regex="[0-9]"/>
+                            </rules>
+                        </MaskInput>
+
+                        <Label text="{i18n>cardPassword}"  labelFor="inputCardPasswordId"/>
+                        <Input
+                                id="inputCardPasswordId"
+                                valueState="Information"
+                                required="true"
+                                width="40%"
+                                type="Password"
+                                value="{credentials>/cardPassword}"/>
+
+                    </f:content>
+                </f:SimpleForm>
+                <FlexBox justifyContent="Center">
+                    <items>
+                        <Button type="Accept" press="submitLogIn" text="{i18n>submitLogIn}" width="100%" />
+                    </items>
+                </FlexBox>
+            </l:content>
+        </l:Grid>
+        <tnt:ToolPage id="toolPage" visible="{config>/cashOperationsVisible}">
+            <tnt:sideContent>
+                <tnt:SideNavigation itemSelect=".onItemSelect">
+                    <tnt:NavigationList>
+                        <tnt:NavigationListItem
+                                text="{i18n>withdrawMoney}"
+                                key="withdrawMoneyKey"/>
+                        <tnt:NavigationListItem
+                                text="{i18n>viewBalance}"
+                                key="viewBalanceKey"/>
+                        <tnt:NavigationListItem
+                                text="{i18n>makePayment}"
+                                key="makePaymentKey"/>
+                        <tnt:NavigationListItem
+                                text="{i18n>pickUpCard}"
+                                key="pickUpCardKey"/>
+                    </tnt:NavigationList>
+                </tnt:SideNavigation>
+            </tnt:sideContent>
+            <tnt:mainContents>
+                <NavContainer id="pageContainer">
+                    <pages>
+                        <ScrollContainer
+                                id="withdrawMoneyKey"
+                                horizontal="false"
+                                vertical="true"
+                                height="100%">
+                            <f:SimpleForm
+                                    editable="true"
+                                    layout="ResponsiveGridLayout"
+                                    labelSpanXL="3"
+                                    labelSpanL="3"
+                                    labelSpanM="3"
+                                    labelSpanS="3"
+                                    adjustLabelSpan="false"
+                                    emptySpanXL="0"
+                                    emptySpanL="0"
+                                    emptySpanM="0"
+                                    emptySpanS="0"
+                                    columnsXL="2"
+                                    columnsL="2"
+                                    columnsM="2"
+                                    singleContainerFullSize="false">
+                                <f:content>
+                                    <Label text="{i18n>customerFIO}"/>
+                                    <Input
+                                            type="Text"
+                                            value="{customer>/SURNAME} {customer>/NAME} {customer>/MIDDLENAME}"
+                                            enabled="false"/>
+                                    <Label text="{i18n>currency}"/>
+                                    <Input
+                                            type="Text"
+                                            value="{currency>/NAME}"
+                                            enabled="false"/>
+                                    <Label text="{i18n>withdrawSum}" />
+                                    <Input
+                                            type="Number"
+                                            valueState="Information"
+                                            valueStateText="{i18n>obligatoryField}"
+                                            id="inputWithdrawSumId"/>
+                                    <Button type="Accept" press="submitWithdraw" text="{i18n>submitLogIn}" width="100%" />
+                                </f:content>
+                            </f:SimpleForm>
+
+                        </ScrollContainer>
+                        <ScrollContainer
+                                id="viewBalanceKey"
+                                horizontal="false"
+                                vertical="true"
+                                height="100%">
+                            <f:SimpleForm
+                                    editable="true"
+                                    layout="ResponsiveGridLayout"
+                                    labelSpanXL="5"
+                                    labelSpanL="5"
+                                    labelSpanM="5"
+                                    labelSpanS="5"
+                                    adjustLabelSpan="false"
+                                    emptySpanXL="0"
+                                    emptySpanL="0"
+                                    emptySpanM="0"
+                                    emptySpanS="0"
+                                    columnsXL="2"
+                                    columnsL="2"
+                                    columnsM="2"
+                                    singleContainerFullSize="false">
+                                <f:content>
+                                    <Label text="{i18n>contractNumber}"/>
+                                    <Input
+                                            value="{loan>/CONTRACTNUMBER}"
+                                            enabled="false"/>
+                                    <Label text="{i18n>customerFIO}"/>
+                                    <Input
+                                            type="Text"
+                                            value="{customer>/SURNAME} {customer>/NAME} {customer>/MIDDLENAME}"
+                                            enabled="false"/>
+                                    <Label text="{i18n>balance}"/>
+                                    <Input
+                                            id="inputBalance"
+                                            value="{balance>/currSum}"
+                                            enabled="false"/>
+                                </f:content>
+                            </f:SimpleForm>
+
+                        </ScrollContainer>
+                        <ScrollContainer
+                                id="makePaymentKey"
+                                horizontal="false"
+                                vertical="true"
+                                height="100%">
+                            <f:SimpleForm
+                                    editable="true"
+                                    layout="ResponsiveGridLayout"
+                                    labelSpanXL="4"
+                                    labelSpanL="4"
+                                    labelSpanM="4"
+                                    labelSpanS="4"
+                                    adjustLabelSpan="false"
+                                    emptySpanXL="0"
+                                    emptySpanL="0"
+                                    emptySpanM="0"
+                                    emptySpanS="0"
+                                    columnsXL="2"
+                                    columnsL="2"
+                                    columnsM="2"
+                                    singleContainerFullSize="false">
+                                <f:content>
+                                    <Label text="{i18n>mobileOperator}"/>
+                                    <Select
+                                            valueState="Information"
+                                            valueStateText="{i18n>obligatoryField}"
+                                            id="selMobileOperatorId"
+                                            forceSelection="false"
+                                            items="{
+                                                path: 'mobileOperator>/variants'}">
+                                        <core:Item key="{mobileOperator>key}" text="{mobileOperator>name}" />
+                                    </Select>
+                                    <Label text="{i18n>phoneNumber}"/>
+                                    <MaskInput
+                                            valueState="Information"
+                                            valueStateText="{i18n>obligatoryField}"
+                                            id="inputPhoneNumberId"
+                                            mask="+375CCCCCCCCC"
+                                            placeholderSymbol="_"
+                                            value="{phoneNumber}">
+                                        <rules>
+                                            <MaskInputRule maskFormatSymbol="C" regex="[0-9]"/>
+                                        </rules>
+                                    </MaskInput>
+                                    <Label text="{i18n>withdrawSum}" />
+                                    <Input
+                                            type="Number"
+                                            valueState="Information"
+                                            valueStateText="{i18n>obligatoryField}"
+                                            id="inputPaymentSumId"/>
+                                    <Button type="Accept" press="submitPayment" text="{i18n>submitLogIn}" width="100%" />
+                                </f:content>
+                            </f:SimpleForm>
+                        </ScrollContainer>
+                    </pages>
+                </NavContainer>
+            </tnt:mainContents>
+        </tnt:ToolPage>
+    </Page>
+
+</mvc:View>

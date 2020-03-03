@@ -42,6 +42,7 @@ sap.ui.define([
             let id = oEvent.getParameter("arguments").id;
             this.oConfigModel.setProperty("/isCreateMode", false);
             this._setEditMode(false);
+            //обязательно делать unbind между odata и json моделями
             this.getView().unbindObject();
 
             if (id === "new") {
